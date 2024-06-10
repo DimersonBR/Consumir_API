@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digi-mon-API - Consumo de API</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="searchText" placeholder="Digite nome">
+        <button @click="fetchDigimons">Buscar Digimon</button>
+        <div class="digimon-container" v-if="digimons.length > 0">
+            <ul>
+                <li v-for="digimon in filteredDigimons" :key="digimon.name">
+                    <div :class="['digimon-card', getTypeClass(digimon.level)]" @click="toggleDetails(digimon)">
+                        <img :src="digimon.img" alt="Pokemon">
+                        <p>{{ digimon.name }}</p>
+                        <div v-if="digimon.showDetails" class="details">
+                            <p>{{ digimon.level }}</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div v-else-if="!loading && !digimons.length && called">Não encontrado.</div>
+    </div>
+</body>
+</html>
+<script src="index.js"></script>
